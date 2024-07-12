@@ -1,6 +1,3 @@
-
-
-
 resource "azurerm_public_ip" "AAG_public_ip" {
   name                = "AAG_public_ip"
   location            = azurerm_resource_group.main.location
