@@ -54,7 +54,7 @@ resource "azurerm_virtual_machine" "frontend" {
     }
   }
 
-  depends_on = [azurerm_application_gateway.AAG_tunefy_backend]
+  depends_on = [azurerm_application_gateway.AAG_tunefy]
 }
 
 
