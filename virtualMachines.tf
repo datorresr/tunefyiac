@@ -191,6 +191,7 @@ resource "azurerm_virtual_machine" "gitlab_runner" {
     package_upgrade: true
     packages:
       - docker.io
+      - docker-compose
       - curl
 
     runcmd:
