@@ -2,16 +2,16 @@ resource "azurerm_network_security_group" "public" {
   name                = "publicNSG"
   location            = var.location
   resource_group_name = azurerm_resource_group.main.name
-
+  
   security_rule {
-    name                       = "AllowHTTP"
+    name                       = "AllowSSHFromRunner"
     priority                   = 1001
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "Tcp"
     source_port_range          = "*"
-    destination_port_range     = "80"
-    source_address_prefix      = "*"
+    destination_port_range     = "22"
+    source_address_prefix      = azurerm_network_interface.gitlab_runner.private_ip_address
     destination_address_prefix = "*"
   }
 
@@ -72,8 +72,20 @@ resource "azurerm_network_security_group" "private" {
   }
 
   security_rule {
-    name                       = "AllowPostgreeFromBastion"
+    name                       = "AllowSSHFromRunner"
     priority                   = 1003
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "22"
+    source_address_prefix      = azurerm_network_interface.gitlab_runner.private_ip_address
+    destination_address_prefix = "*"
+  }
+
+  security_rule {
+    name                       = "AllowPostgreeFromBastion"
+    priority                   = 1004
     direction                  = "Inbound"
     access                     = "Allow"
     protocol                   = "Tcp"
